@@ -36,9 +36,3 @@ jobs:
 
       - name: Lint Helm Chart
         run: helm lint ./node-app-chart
-
-      - name: Deploy to Kubernetes
-        run: |
-          helm upgrade --install my-release ./node-app-chart \
-            --set image.repository=${{ secrets.DOCKERHUB_USERNAME }}/node-hello \
-            --set image.tag=latest
