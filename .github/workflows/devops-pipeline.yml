@@ -38,9 +38,7 @@ jobs:
         run: helm lint ./node-app-chart
 
       - name: Deploy to Kubernetes
-        uses: azure/k8s-deploy@v1
-        with:
-          manifests: |
-            ./node-app-chart/templates/deployment.yaml
-          images: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/node-hello:latest
+        run: |
+          helm upgrade --install my-release ./node-app-chart \
+            --set image.repository=${{ secrets.DOCKERHUB_USERNAME }}/node-hello \
+            --set image.tag=latest
